@@ -78,6 +78,9 @@ public class Player : MonoBehaviour {
 
         //Move the player
         transform.Translate(new Vector3(horizontal, vertical, 0) * Time.deltaTime * speed, Space.World);
+        
+        //Rotate the player smoothly according to the input
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(-vertical * 27, 0, -horizontal * 25), Time.deltaTime * 10);
     }
 
     /// <summary>
