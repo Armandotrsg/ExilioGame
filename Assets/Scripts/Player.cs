@@ -116,21 +116,7 @@ public class Player : MonoBehaviour {
                 rightDash = -1;
             }
         } else { // If the player is dashing
-            transform.Translate(new Vector3(rightDash, 0, 0) * Time.deltaTime * speed, Space.World); // Move the player
-            transform.Rotate(new Vector3(0, 0, -1 * rightDash) * Time.deltaTime * 350, Space.Self); // Rotate the player
-            dashTime -= Time.deltaTime; // Reduce the dash time
-            if (dashTime <= 0) {
-                isDashing = false;
-                dashTime = 1.2f;
-            }
-            //Check if the player is out of bounds
-            if (transform.position.x > maxX && rightDash > 0) {
-                isDashing = false;
-                dashTime = 1.2f;
-            }else if (transform.position.x < minX && rightDash < 0) {
-                isDashing = false;
-                dashTime = 1.2f;
-            }
+            Dash();
         }
         /* // Check if the player is shooting and if the cooldown is less than or equal to 0
         if ((Input.GetButtonDown("Fire1") || Input.GetButtonDown("Jump"))) {
@@ -174,4 +160,25 @@ public class Player : MonoBehaviour {
             }
         }
     } */
+
+    /// <summary>
+    ///     Dash mechanic
+    /// </summary>
+    void Dash() {
+        transform.Translate(new Vector3(rightDash, 0, 0) * Time.deltaTime * speed, Space.World); // Move the player
+        transform.Rotate(new Vector3(0, 0, -1 * rightDash) * Time.deltaTime * 350, Space.Self); // Rotate the player
+        dashTime -= Time.deltaTime; // Reduce the dash time
+        if (dashTime <= 0) {
+            isDashing = false;
+            dashTime = 1.2f;
+        }
+        //Check if the player is out of bounds
+        if (transform.position.x > maxX && rightDash > 0) {
+            isDashing = false;
+            dashTime = 1.2f;
+        }else if (transform.position.x < minX && rightDash < 0) {
+            isDashing = false;
+            dashTime = 1.2f;
+        }
+    }
 }
