@@ -214,6 +214,7 @@ MonoBehaviour:
   minX: -4
   maxX: 4
   speed: 4
+  cam: {fileID: 963194227}
   lives: 3
 --- !u!1 &705507993
 GameObject:

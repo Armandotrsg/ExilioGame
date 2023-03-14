@@ -13,6 +13,9 @@ public class Player : MonoBehaviour {
 
     private static Player _instance;
 
+    [SerializeField]
+    private Camera cam;
+
     public static Player Instance {
         get {
             return _instance;
@@ -81,6 +84,9 @@ public class Player : MonoBehaviour {
         
         //Rotate the player smoothly according to the input
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(-vertical * 27, 0, -horizontal * 25), Time.deltaTime * 10);
+
+        //Smoothly move the camera to the player's position
+        cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, Quaternion.Euler(-vertical * 27 / 13, 0, -horizontal * 25 / 13), Time.deltaTime * 10);
     }
 
     /// <summary>
