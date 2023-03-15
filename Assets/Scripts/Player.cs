@@ -8,8 +8,13 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float minY, maxY, minX, maxX, speed;
 
+    private bool isDashing = false;
+    private int rightDash = 1;
+    private float dashTime = 1.2f;
+
     [SerializeField]
     private PlayerLaser laser;
+
 
     private static Player _instance;
 
@@ -99,7 +104,20 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         // Move the player
-        MovePlayer();
+        if (!isDashing) {
+            MovePlayer();
+            if (Input.GetKeyDown(KeyCode.E)) {
+                isDashing = true;
+                rightDash = 1;
+            } else if (Input.GetKeyDown(KeyCode.Q)) {
+                isDashing = true;
+                rightDash = -1;
+            }
+        } else { // If the player is dashing
+            Dash();
+        }
+        /* // Check if the player is shooting and if the cooldown is less than or equal to 0
+
         // Checks if the player is shooting
         if ((Input.GetButtonDown("Fire1") || Input.GetButtonDown("Jump"))) {
             // Start the delay coroutine
@@ -142,4 +160,25 @@ public class Player : MonoBehaviour {
             }
         }
     } */
+
+    /// <summary>
+    ///     Dash mechanic
+    /// </summary>
+    void Dash() {
+        transform.Translate(new Vector3(rightDash, 0, 0) * Time.deltaTime * speed, Space.World); // Move the player
+        transform.Rotate(new Vector3(0, 0, -1 * rightDash) * Time.deltaTime * 305, Space.Self); // Rotate the player
+        dashTime -= Time.deltaTime; // Reduce the dash time
+        if (dashTime <= 0) {
+            isDashing = false;
+            dashTime = 1.2f;
+        }
+        //Check if the player is out of bounds
+        if (transform.position.x > maxX && rightDash > 0) {
+            isDashing = false;
+            dashTime = 1.2f;
+        }else if (transform.position.x < minX && rightDash < 0) {
+            isDashing = false;
+            dashTime = 1.2f;
+        }
+    }
 }
