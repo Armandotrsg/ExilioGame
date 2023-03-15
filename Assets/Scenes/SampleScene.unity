@@ -5053,11 +5053,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39daa1bb7200dc841bccdfbc2fd41dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asteroidPrefab: {fileID: 3300980288651212974, guid: 630940bcd1a8ee541bde6c000c174358, type: 3}
+  EnemyPrefab: {fileID: 3300980288651212974, guid: 630940bcd1a8ee541bde6c000c174358, type: 3}
   spawnRadius: 5
-  spawnRate: 2
-  asteroidSpeed: -5
-  destructionTime: 2
+  spawnRate: 4
+  EnemySpeed: -5
+  destructionTime: 6
+  spawnDistance: 20
 --- !u!4 &540036846
 Transform:
   m_ObjectHideFlags: 0
