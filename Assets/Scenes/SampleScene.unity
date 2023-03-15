@@ -214,6 +214,7 @@ MonoBehaviour:
   minX: -4
   maxX: 4
   speed: 4
+  laser: {fileID: 8529550411453523809, guid: ed13fa47ab49c40169685fd127abf930, type: 3}
   lives: 3
 --- !u!1 &705507993
 GameObject:
