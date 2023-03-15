@@ -166,7 +166,7 @@ public class Player : MonoBehaviour {
     /// </summary>
     void Dash() {
         transform.Translate(new Vector3(rightDash, 0, 0) * Time.deltaTime * speed, Space.World); // Move the player
-        transform.Rotate(new Vector3(0, 0, -1 * rightDash) * Time.deltaTime * 350, Space.Self); // Rotate the player
+        transform.Rotate(new Vector3(0, 0, -1 * rightDash) * Time.deltaTime * 305, Space.Self); // Rotate the player
         dashTime -= Time.deltaTime; // Reduce the dash time
         if (dashTime <= 0) {
             isDashing = false;
