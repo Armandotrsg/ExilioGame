@@ -116,8 +116,6 @@ public class Player : MonoBehaviour {
         } else { // If the player is dashing
             Dash();
         }
-    }
-        /* // Check if the player is shooting and if the cooldown is less than or equal to 0
 
         // Checks if the player is shooting
         if ((Input.GetButtonDown("Fire1") || Input.GetButtonDown("Jump"))) {
