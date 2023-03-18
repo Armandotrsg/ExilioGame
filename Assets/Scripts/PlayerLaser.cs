@@ -15,6 +15,8 @@ public class PlayerLaser : MonoBehaviour
     {
         transform.Rotate(90, 0, 0); // Rotate the bullet
         Destroy(gameObject, 5f); // Destroy the bullet after 5 seconds
+        player = Player.Instance; // So player is not null
+
     }
 
     // Update is called once per frame
@@ -29,7 +31,6 @@ public class PlayerLaser : MonoBehaviour
             other.GetComponent<Enemy>().Damage(damage);
             Destroy(gameObject);
             player.Score += 10;
-            print("dead");
             //_scoreGUI._texto.text = "Score: " + player.Score;
         }
     }
