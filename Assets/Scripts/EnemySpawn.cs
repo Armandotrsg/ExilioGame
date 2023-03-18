@@ -13,6 +13,7 @@ public class EnemySpawn : MonoBehaviour
     public float destructionTime;
 
     public float spawnDistance = 10f;
+    public float spawnZRange = 2f;
 
     private Transform target;
     private float nextSpawnTime;
@@ -26,22 +27,23 @@ public class EnemySpawn : MonoBehaviour
     {
         if (Time.time >= nextSpawnTime)
         {
-            SpawnAsteroid();
+            SpawnEnemy();
             nextSpawnTime = Time.time + 1f / spawnRate;
         }
     }
 
-    void SpawnAsteroid()
+    void SpawnEnemy()
     {
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
-        spawnPosition.z = Random.Range(-spawnDistance, spawnDistance); 
+        float zPos = Mathf.Clamp(target.position.z + Random.Range(-spawnZRange, spawnZRange), transform.position.z + spawnDistance, transform.position.z + spawnDistance + spawnZRange * 2f);
+        spawnPosition.z = zPos; 
         
-        GameObject Enemy = Instantiate(EnemyPrefab, spawnPosition, Quaternion.identity);
-        Enemy.transform.LookAt(target);
+        GameObject enemy = Instantiate(EnemyPrefab, spawnPosition, Quaternion.identity);
+        enemy.transform.LookAt(target);
 
-        Rigidbody EnemyRb = Enemy.GetComponent<Rigidbody>();
-        EnemyRb.velocity = Enemy.transform.forward * EnemySpeed;
+        Rigidbody enemyRb = enemy.GetComponent<Rigidbody>();
+        enemyRb.velocity = enemy.transform.forward * EnemySpeed;
 
-        Destroy(Enemy, destructionTime);
+        Destroy(enemy, destructionTime);
     }
 }
