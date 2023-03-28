@@ -5058,12 +5058,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39daa1bb7200dc841bccdfbc2fd41dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyPrefab: {fileID: 3300980288651212974, guid: 630940bcd1a8ee541bde6c000c174358, type: 3}
-  spawnRadius: 5
-  spawnRate: 4
-  EnemySpeed: 10
-  destructionTime: 6
-  spawnDistance: 5
+  EnemyPrefab: {fileID: 6545252975668709015, guid: e8b14dde53114d242b5dcad7698a44a7, type: 3}
+  spawnRadius: 10
+  spawnRate: 2
+  EnemySpeed: 8
+  destructionTime: 5
+  spawnDistance: 10
   spawnZRange: 30
 --- !u!4 &540036846
 Transform:
