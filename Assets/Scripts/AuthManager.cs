@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
 using TMPro;
@@ -33,6 +34,7 @@ public class AuthManager : MonoBehaviour
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void InitializeFirebase()
@@ -92,6 +94,7 @@ public class AuthManager : MonoBehaviour
             statusText.text = "Login Successful";
             //Set text color to green
             statusText.color = new Color32(0, 255, 0, 255);
+            SceneManager.LoadScene(1);
         }
     }
 
@@ -134,5 +137,14 @@ public class AuthManager : MonoBehaviour
         }
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+        }
+        // Login when click enter
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            LoginButton();
+        }
+    }
 
 }
