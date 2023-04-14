@@ -45,5 +45,6 @@ public class EnemySpawn : MonoBehaviour
         enemyRb.velocity = enemy.transform.forward * EnemySpeed;
 
         Destroy(enemy, destructionTime);
+        
     }
 }
