@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
+using Firebase.Database;
 using TMPro;
 
-public class AuthManager : MonoBehaviour
+public class FirebaseManager : MonoBehaviour
 {
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;
     public FirebaseUser User;
+    public DatabaseReference DBreference;
 
     [Header("Login/Register")]
     public TMP_InputField emailField;
@@ -19,6 +21,9 @@ public class AuthManager : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text statusText;
+
+    [Header("Score")]
+    public int score;
 
     // Start is called before the first frame update
     void Awake()
@@ -41,6 +46,7 @@ public class AuthManager : MonoBehaviour
     {
         Debug.Log("Setting up Firebase Auth");
         auth = FirebaseAuth.DefaultInstance;
+        DBreference = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
     public void LoginButton() {
@@ -49,6 +55,37 @@ public class AuthManager : MonoBehaviour
 
     public void RegisterButton() {
         StartCoroutine(Register(emailField.text, passwordField.text));
+    }
+
+    public void SignoutButton() {
+        auth.SignOut();
+        SceneManager.LoadScene(0);
+    }
+
+    // Save score to the user's account
+    public IEnumerator SetScore(int score) {
+        var DBTask = DBreference.Child("users").Child(User.UserId).Child("score").SetValueAsync(score);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null) {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.IsCompleted) {
+            Debug.Log("Score saved successfully");
+        }
+    }
+
+    // Save user's kills
+    public IEnumerator SetKills(int kills) {
+        var DBTask = DBreference.Child("users").Child(User.UserId).Child("kills").SetValueAsync(kills);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null) {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.IsCompleted) {
+            Debug.Log("Kills saved successfully");
+        }
     }
 
     private IEnumerator Login(string email, string password) {
@@ -94,6 +131,7 @@ public class AuthManager : MonoBehaviour
             statusText.text = "Login Successful";
             //Set text color to green
             statusText.color = new Color32(0, 255, 0, 255);
+            yield return new WaitForSeconds(2f);
             SceneManager.LoadScene(1);
         }
     }
@@ -129,13 +167,31 @@ public class AuthManager : MonoBehaviour
         else {
             User = RegisterTask.Result;
             if (User != null) {
-                Debug.LogFormat("Firebase user created successfully: {0} ({1})", User.DisplayName, User.Email);
-                statusText.text = "Registration Successful";
-                //Set text color to green
-                statusText.color = new Color32(0, 255, 0, 255);
+                //Create a user profile and set the username
+                //The username will be the email without the domain
+                UserProfile profile = new UserProfile { DisplayName = email.Split('@')[0] };
+                var ProfileTask = User.UpdateUserProfileAsync(profile);
+                yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
+                if (ProfileTask.Exception != null) {
+                    Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
+                    FirebaseException firebaseEx = ProfileTask.Exception.GetBaseException() as FirebaseException;
+                    AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+                    statusText.text = "Registration failed";
+                    //Set text color to red
+                    statusText.color = new Color32(255, 0, 0, 255);
+                }
+                else {
+                    Debug.LogFormat("User created successfully: {0} ({1})", User.DisplayName, User.Email);
+                    statusText.text = "Registration Successful";
+                    //Set text color to green
+                    statusText.color = new Color32(0, 255, 0, 255);
+                }
             }
         }
     }
+
+    // Set the username to be the email
+
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
