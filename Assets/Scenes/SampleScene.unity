@@ -5029,6 +5029,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: -8679921383154817045, guid: 92905f5a8413842a4bfad9b7088b15ca, type: 3}
   followSpeed: -10
+--- !u!65 &529916945
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529916936}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5495687, y: 1.2542728, z: 5.976953}
+  m_Center: {x: 0.05167079, y: -0.045465052, z: -1.5651925}
 --- !u!1 &540036844
 GameObject:
   m_ObjectHideFlags: 0
