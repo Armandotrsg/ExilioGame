@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "454464244194",
+    "firebase_url": "https://exiliogame-509f0-default-rtdb.firebaseio.com",
+    "project_id": "exiliogame-509f0",
+    "storage_bucket": "exiliogame-509f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454464244194:android:604fd1e353fde41428d1bb",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.ExilioGame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454464244194-9k60dirgl2hratq3bb05kimh6b4h21j6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDq6bIwvEYdrzcSY6CPPWUTWbOrMDHeUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "454464244194-9k60dirgl2hratq3bb05kimh6b4h21j6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
