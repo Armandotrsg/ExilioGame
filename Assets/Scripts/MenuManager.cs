@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Assertions;
 using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
+    private FirebaseManager firebaseManager;
+
+    void Start() {
+        firebaseManager = FirebaseManager.Instance;
+        Assert.IsNotNull(firebaseManager, "FirebaseManager is null");
+    }
     public void playGame() {
         SceneManager.LoadScene(2);
     }
@@ -19,7 +26,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void quitGame() {
-        Debug.Log("Quit");
+        firebaseManager.Signout();
         Application.Quit();
     }
 }

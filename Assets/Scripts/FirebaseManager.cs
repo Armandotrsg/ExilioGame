@@ -26,6 +26,14 @@ public class FirebaseManager : MonoBehaviour
     [Header("Score")]
     public int score;
 
+    [Header("Instance")]
+    private static FirebaseManager instance = null;
+    public static FirebaseManager Instance {
+        get {
+            return instance;
+        }
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -40,7 +48,15 @@ public class FirebaseManager : MonoBehaviour
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
+        
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
         DontDestroyOnLoad(this.gameObject);
+ 
     }
 
     private void InitializeFirebase()
@@ -58,8 +74,9 @@ public class FirebaseManager : MonoBehaviour
         StartCoroutine(Register(emailField.text, passwordField.text));
     }
 
-    public void SignoutButton() {
+    public void Signout() {
         auth.SignOut();
+        Debug.Log("Signed out");
         SceneManager.LoadScene(0);
     }
 
