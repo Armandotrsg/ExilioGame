@@ -27,7 +27,7 @@ public class Player : MonoBehaviour {
     Coroutine currentCoroutine;
 
     [SerializeField]
-    private int lives = 3;
+    public int lives = 3;
 
 /*     private LivesGUI livesGUI;
     private ScoreGUI scoreGUI; */

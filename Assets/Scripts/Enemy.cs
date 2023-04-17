@@ -9,6 +9,28 @@ public class Enemy : MonoBehaviour
     private float live = 10f;
 
 
+    [SerializeField]
+    private int damage = 1;
+
+    void OnTriggerEnter(Collider other) {
+    // If the enemy collides with the player
+        if (other.CompareTag("Player")) {
+        // Reduce the player's lives by the damage amount
+            other.GetComponent<Player>().lives -= damage;
+
+        // If the player has no more lives
+            if (other.GetComponent<Player>().lives <= 0) {
+            // Destroy the player
+                Destroy(other.gameObject);
+            }
+
+        // Destroy the enemy
+            Destroy(gameObject);
+        }
+    }
+
+
+
     // Start is called before the first frame update
     void Start()
     {
