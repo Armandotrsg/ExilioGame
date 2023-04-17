@@ -12,11 +12,16 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int damage = 1;
 
+    [SerializeField]
+    private Lives lives;
+
     void OnTriggerEnter(Collider other) {
     // If the enemy collides with the player
         if (other.CompareTag("Player")) {
         // Reduce the player's lives by the damage amount
             other.GetComponent<Player>().lives -= damage;
+            lives._texto.text = "Lives: " + other.GetComponent<Player>().lives;
+            
 
         // If the player has no more lives
             if (other.GetComponent<Player>().lives <= 0) {
@@ -34,6 +39,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lives = Lives.Instance;
         
     }
 
