@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerLaser : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerLaser : MonoBehaviour
 
     private Player player;
 
+    private Score score;
 
     // Start is called before the first frame update
     [SerializeField]private float speed = 2f;
@@ -16,7 +18,7 @@ public class PlayerLaser : MonoBehaviour
         transform.Rotate(90, 0, 0); // Rotate the bullet
         Destroy(gameObject, 5f); // Destroy the bullet after 5 seconds
         player = Player.Instance; // So player is not null
-
+        score = Score.Instance;
     }
 
     // Update is called once per frame
@@ -31,7 +33,7 @@ public class PlayerLaser : MonoBehaviour
             other.GetComponent<Enemy>().Damage(damage);
             Destroy(gameObject);
             player.Score += 10;
-            //_scoreGUI._texto.text = "Score: " + player.Score;
+            score._texto.text = "Score: " + player.Score;
         }
     }
 }
