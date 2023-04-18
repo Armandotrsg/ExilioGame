@@ -22,7 +22,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void viewMyScoreboard() {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(5);
     }
 
     public void quitGame() {

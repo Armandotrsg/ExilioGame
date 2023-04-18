@@ -33,6 +33,7 @@ public class Player : MonoBehaviour {
     private ScoreGUI scoreGUI; */
 
     private int score = 0;
+    private int kills = 0;
 
     public int Score {
         get {
@@ -40,6 +41,15 @@ public class Player : MonoBehaviour {
         }
         set {
             score = value;
+        }
+    }
+
+    public int Kills {
+        get {
+            return kills;
+        }
+        set {
+            kills = value;
         }
     }
 
