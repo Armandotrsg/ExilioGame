@@ -70,8 +70,16 @@ public class TableBodyManager : MonoBehaviour
             // Values: System.Collections.Generic.List`1[System.Object]
             // Add the top 10 scores to the table
             
-            //Order the scores from highest to lowest
-            values.Sort((x, y) => ((Dictionary<string, object>)y)["score"].ToString().CompareTo(((Dictionary<string, object>)x)["score"].ToString()));
+            //Order all 10 scores by score
+            values.Sort(delegate (object a, object b)
+            {
+                Dictionary<string, object> userA = (Dictionary<string, object>)a;
+                Dictionary<string, object> userB = (Dictionary<string, object>)b;
+                int scoreA = int.Parse(userA["score"].ToString());
+                int scoreB = int.Parse(userB["score"].ToString());
+                return scoreB.CompareTo(scoreA);
+            });
+            
             
             int position = 1;
             foreach (object value in values)
