@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class Enemy : MonoBehaviour
             if (other.GetComponent<Player>().lives <= 0) {
             // Destroy the player
                 Destroy(other.gameObject);
+            // Load the game over scene
+                SceneManager.LoadScene(4);
             }
 ///
         // Destroy the enemy
