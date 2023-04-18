@@ -107,6 +107,10 @@ public class TableBodyManager : MonoBehaviour
                 // Add the row to the table
                 AddRow(username, score, kills, position);
                 position++;
+                if (position > 10)
+                {
+                    break;
+                }
             }
         }
     }
