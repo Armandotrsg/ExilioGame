@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Assertions;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,6 +17,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Lives lives;
 
+    private FirebaseManager firebaseManager;
+
+    void Start()
+    {
+        lives = Lives.Instance;
+        firebaseManager = FirebaseManager.Instance;
+        Assert.IsNotNull(firebaseManager, "FirebaseManager is null");
+    }
+
     void OnTriggerEnter(Collider other) {
     // If the enemy collides with the player
         if (other.CompareTag("Player")) {
@@ -26,8 +36,11 @@ public class Enemy : MonoBehaviour
 
         // If the player has no more lives
             if (other.GetComponent<Player>().lives <= 0) {
+                // Save the score and kills to the database
+                StartCoroutine(firebaseManager.SaveScore(other.GetComponent<Player>().Score));
+                StartCoroutine(firebaseManager.SaveKills(other.GetComponent<Player>().Kills));
             // Destroy the player
-                Destroy(other.gameObject);
+                //Destroy(other.gameObject);
             // Load the game over scene
                 SceneManager.LoadScene(4);
             }
@@ -36,16 +49,6 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        lives = Lives.Instance;
-        
-    }
-
 
     public void Damage(float damage)
     {

@@ -82,7 +82,7 @@ public class FirebaseManager : MonoBehaviour
     }
 
     // Save score to the user's account
-    public IEnumerator SetScore(int score) {
+    public IEnumerator SaveScore(int score) {
         var DBTask = DBreference.Child("users").Child(User.UserId).Child("score").SetValueAsync(score);
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -95,7 +95,7 @@ public class FirebaseManager : MonoBehaviour
     }
 
     // Save user's kills
-    public IEnumerator SetKills(int kills) {
+    public IEnumerator SaveKills(int kills) {
         var DBTask = DBreference.Child("users").Child(User.UserId).Child("kills").SetValueAsync(kills);
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -204,12 +204,13 @@ public class FirebaseManager : MonoBehaviour
                     statusText.text = "Registration Successful";
                     //Set text color to green
                     statusText.color = new Color32(0, 255, 0, 255);
+
                 }
             }
         }
     }
 
-    // Set the username to be the email
+    
 
 
     void Update() {
