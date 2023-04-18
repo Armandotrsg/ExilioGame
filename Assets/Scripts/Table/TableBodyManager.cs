@@ -44,7 +44,7 @@ public class TableBodyManager : MonoBehaviour
     {
         //Get the top 10 scores from the database
         Debug.Log("Getting top scores");
-        var DBTask = firebaseManager.DBreference.Child("users").LimitToLast(10).GetValueAsync();
+        var DBTask = firebaseManager.DBreference.Child("users").GetValueAsync();
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
         if (DBTask.Exception != null)
