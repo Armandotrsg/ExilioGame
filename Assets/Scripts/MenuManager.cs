@@ -18,7 +18,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void viewGlobalScoreboard() {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(3);
     }
 
     public void viewMyScoreboard() {
@@ -28,5 +28,9 @@ public class MenuManager : MonoBehaviour
     public void quitGame() {
         firebaseManager.Signout();
         Application.Quit();
+    }
+
+    public void backToMenu() {
+        SceneManager.LoadScene(1);
     }
 }
