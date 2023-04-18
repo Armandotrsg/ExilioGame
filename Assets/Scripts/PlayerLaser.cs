@@ -33,6 +33,7 @@ public class PlayerLaser : MonoBehaviour
             other.GetComponent<Enemy>().Damage(damage);
             Destroy(gameObject);
             player.Score += 10;
+            player.Kills += 1;
             score._texto.text = "Score: " + player.Score;
         }
     }
