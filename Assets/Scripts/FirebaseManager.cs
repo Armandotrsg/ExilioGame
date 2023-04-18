@@ -107,6 +107,19 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
+    // Save the username to the user's account
+    public IEnumerator SaveUsername(string username) {
+        var DBTask = DBreference.Child("users").Child(User.UserId).Child("username").SetValueAsync(username);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null) {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.IsCompleted) {
+            Debug.Log("Username saved successfully");
+        }
+    }
+
     private IEnumerator Login(string email, string password) {
         var LoginTask = auth.SignInWithEmailAndPasswordAsync(email, password);
         yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);

@@ -13,9 +13,6 @@ public class TableBodyManager : MonoBehaviour
     {
         TableRow tableRow = Instantiate(tableRowPrefab, transform);
         tableRow.type = "Body";
-        Debug.Log("username: " + username);
-        Debug.Log("score: " + score);
-        Debug.Log("kills: " + kills);
         tableRow.username.text.text = username;
         tableRow.score.text.text = score.ToString();
         tableRow.kills.text.text = kills.ToString();
@@ -39,7 +36,7 @@ public class TableBodyManager : MonoBehaviour
     {
         //Get the top 10 scores from the database
         Debug.Log("Getting top scores");
-        var DBTask = firebaseManager.DBreference.Child("users").OrderByChild("score").LimitToLast(10).GetValueAsync();
+        var DBTask = firebaseManager.DBreference.Child("users").LimitToLast(10).GetValueAsync();
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
         if (DBTask.Exception != null)
@@ -72,25 +69,25 @@ public class TableBodyManager : MonoBehaviour
             Debug.Log("Values: " + values.ToString());
             // Values: System.Collections.Generic.List`1[System.Object]
             // Add the top 10 scores to the table
+            
+            //Order the scores from highest to lowest
+            values.Sort((x, y) => ((Dictionary<string, object>)y)["score"].ToString().CompareTo(((Dictionary<string, object>)x)["score"].ToString()));
+            
             int position = 1;
             foreach (object value in values)
             {
-                // Get the username of the user
-                string username = keys[values.IndexOf(value)];
-                Debug.Log("Username: " + username);
-                // Username: YyGVhUAn3MYLNrlHcxcho0xoNWS2
-                // Get the score of the user
+
                 Dictionary<string, object> user = (Dictionary<string, object>)value;
-                Debug.Log("User: " + user.ToString());
-                // User: System.Collections.Generic.Dictionary`2[System.String,System.Object]
+
+                // Get the username of the user
+                string username = user["username"].ToString();
+
                 // Get the score of the user
                 int score = int.Parse(user["score"].ToString());
-                Debug.Log("Score: " + score);
-                // Score: 60
+
                 // Get the kills of the user
                 int kills = int.Parse(user["kills"].ToString());
-                Debug.Log("Kills: " + kills);
-                // Kills: 6
+
                 // Add the row to the table
                 AddRow(username, score, kills, position);
                 position++;
