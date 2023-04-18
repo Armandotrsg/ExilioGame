@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
             // Destroy the player
                 Destroy(other.gameObject);
             }
-
+///
         // Destroy the enemy
             Destroy(gameObject);
         }
