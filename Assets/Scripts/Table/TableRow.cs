@@ -23,7 +23,7 @@ public class TableRow : MonoBehaviour
             username.image.color = new Color(0.5f, 0.5f, 0.5f);
             score.image.color = new Color(0.5f, 0.5f, 0.5f);
             kills.image.color = new Color(0.5f, 0.5f, 0.5f);
-        } else if (type == "Body") {
+        } else {
             username.image.color = new Color(0.75f, 0.75f, 0.75f);
             score.image.color = new Color(0.75f, 0.75f, 0.75f);
             kills.image.color = new Color(0.75f, 0.75f, 0.75f);

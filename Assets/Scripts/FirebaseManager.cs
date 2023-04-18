@@ -10,6 +10,7 @@ using System.Linq;
 
 public class FirebaseManager : MonoBehaviour
 {
+
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;
@@ -225,57 +226,6 @@ public class FirebaseManager : MonoBehaviour
             }
         }
     }
-
-    //Load the global scoreboard of all users
-    /* public void LoadScoreboard() {
-        //Get the reference to the scoreboard
-        var DBTask = DBreference.Child("users").OrderByChild("score").GetValueAsync();
-        //Wait until the task is completed
-        StartCoroutine(WaitForDBTask(DBTask));
-    } */
-
-    //Wait for the database task to complete
-    /* private IEnumerator WaitForDBTask(Task<DataSnapshot> task) {
-        yield return new WaitUntil(predicate: () => task.IsCompleted);
-        if (task.Exception != null) {
-            Debug.LogWarning(message: $"Failed to register task with {task.Exception}");
-        }
-        else if (task.IsCompleted) {
-            DataSnapshot snapshot = task.Result;
-            //Get the number of users
-            int numUsers = (int)snapshot.ChildrenCount;
-            //Create an array of users
-            User[] users = new User[numUsers];
-            //Get the enumerator for the snapshot
-            var enumerator = snapshot.Children.GetEnumerator();
-            //Loop through the enumerator
-            for (int i = 0; i < numUsers; i++) {
-                enumerator.MoveNext();
-                //Get the current user
-                DataSnapshot userSnapshot = enumerator.Current;
-                //Get the user's data
-                string email = userSnapshot.Child("email").Value.ToString();
-                int score = int.Parse(userSnapshot.Child("score").Value.ToString());
-                int kills = int.Parse(userSnapshot.Child("kills").Value.ToString());
-                //Create a new user
-                User user = new User(email, score, kills);
-                //Add the user to the array
-                users[i] = user;
-            }
-            //Sort the users by score
-            Array.Sort(users);
-            //Loop through the users
-            for (int i = 0; i < numUsers; i++) {
-                //Get the current user
-                User user = users[i];
-                //Create a new text object
-                GameObject textObject = Instantiate(textPrefab, scoreboardContent.transform);
-                //Get the text component
-                Text text = textObject.GetComponent<Text>();
-                //Set the text
-                text.text = $"{i + 1}. {user.email} - {user.score} - {user.kills}";
-            }
-        }
-    }  */
+    
 
 }
