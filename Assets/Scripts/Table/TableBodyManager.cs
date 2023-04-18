@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Database;
+using UnityEngine.SceneManagement;
 
 public class TableBodyManager : MonoBehaviour
 {
@@ -27,8 +28,15 @@ public class TableBodyManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(GetTopScores());
-        print("HERE");
+        // if current scene is the leaderboard scene
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            // Get the top 10 scores from the database and display them in the table
+            StartCoroutine(GetTopScores());
+        } else {
+            // Get the current user's score and display it in the table
+            StartCoroutine(GetCurrentUserScore());
+        }
     }
 
     // Get the top 10 scores from the database and display them in the table
@@ -79,7 +87,7 @@ public class TableBodyManager : MonoBehaviour
                 int scoreB = int.Parse(userB["score"].ToString());
                 return scoreB.CompareTo(scoreA);
             });
-            
+
             
             int position = 1;
             foreach (object value in values)
@@ -102,5 +110,46 @@ public class TableBodyManager : MonoBehaviour
             }
         }
     }
+
+    // Get the last 10 scores of the current user and display them in the table
+    public IEnumerator GetCurrentUserScore()
+    {
+        //Get the last 10 scores of the current user
+        Debug.Log("Getting current user score");
+        var DBTask = firebaseManager.DBreference.Child("users").Child(firebaseManager.User.UserId).GetValueAsync();
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.IsCompleted)
+        {
+            Debug.Log("Got current user score successfully");
+            DataSnapshot snapshot = DBTask.Result;
+            Debug.Log("Snapshot: " + snapshot.ToString());
+            // DataSnapshot { key = 4W7GVTZ3FcPJrFTBk5ScuFiSHkB3, value = System.Collections.Generic.Dictionary`2[System.String,System.Object] }
+
+            // Get the values of the users dictionary
+            Dictionary<string, object> user = (Dictionary<string, object>)snapshot.Value;
+            Debug.Log("User: " + user.ToString());
+
+            // Get the username of the user
+            string username = user["username"].ToString();
+            Debug.Log("Username: " + username);
+
+            // Get the score of the user
+            int score = int.Parse(user["score"].ToString());
+            Debug.Log("Score: " + score);
+
+            // Get the kills of the user
+            int kills = int.Parse(user["kills"].ToString());
+
+            // Add the row to the table
+            AddRow(username, score, kills, 1);
+        }
+    }
+
+
 
 }
