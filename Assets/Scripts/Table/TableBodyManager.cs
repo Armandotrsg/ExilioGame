@@ -76,39 +76,28 @@ public class TableBodyManager : MonoBehaviour
             List<object> values = new List<object>(users.Values);
             Debug.Log("Values: " + values.ToString());
             // Values: System.Collections.Generic.List`1[System.Object]
-            // Add the top 10 scores to the table
             
-            //Order all 10 scores by score
-            values.Sort(delegate (object a, object b)
-            {
-                Dictionary<string, object> userA = (Dictionary<string, object>)a;
-                Dictionary<string, object> userB = (Dictionary<string, object>)b;
-                int scoreA = int.Parse(userA["score"].ToString());
-                int scoreB = int.Parse(userB["score"].ToString());
-                return scoreB.CompareTo(scoreA);
-            });
 
+            //Order the 10 highest scores
+            values.Sort(delegate (object a, object b) {
+                return int.Parse(((Dictionary<string, object>)b)["score"].ToString()).CompareTo(int.Parse(((Dictionary<string, object>)a)["score"].ToString()));
+            });
             
             int position = 1;
             foreach (object value in values)
             {
-
-                Dictionary<string, object> user = (Dictionary<string, object>)value;
-
                 // Get the username of the user
-                string username = user["username"].ToString();
-
+                string username = ((Dictionary<string, object>)value)["username"].ToString();
+                Debug.Log("Username: " + username);
                 // Get the score of the user
-                int score = int.Parse(user["score"].ToString());
-
+                int score = int.Parse(((Dictionary<string, object>)value)["score"].ToString());
+                Debug.Log("Score: " + score);
                 // Get the kills of the user
-                int kills = int.Parse(user["kills"].ToString());
-
+                int kills = int.Parse(((Dictionary<string, object>)value)["kills"].ToString());
                 // Add the row to the table
                 AddRow(username, score, kills, position);
                 position++;
-                if (position > 10)
-                {
+                if (position > 10) {
                     break;
                 }
             }
