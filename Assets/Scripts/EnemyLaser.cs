@@ -2,38 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Assertions;
 
-public class Enemy : MonoBehaviour
+
+public class EnemyLaser : MonoBehaviour
 {
-    // Life points of the enemy
-    [SerializeField]
-    private float live = 10f;
 
-    [SerializeField]
-    private int damage = 1;
-
+    [SerializeField]private float speed = 3000f;
+    [SerializeField] private int damage;
+    private Player player;
+    private FirebaseManager firebaseManager;
     [SerializeField]
     private Lives lives;
 
-    private FirebaseManager firebaseManager;
 
-    private Coroutine _corrutina;
-
-    [SerializeField]
-    private EnemyLaser proyectil;
-
+    // Start is called before the first frame update
     void Start()
     {
         lives = Lives.Instance;
-        _corrutina = StartCoroutine(DisparoRecurrente());
-        firebaseManager = FirebaseManager.Instance;
-        Assert.IsNotNull(firebaseManager, "FirebaseManager is null");
+        Destroy(gameObject, 5f);
     }
 
-    void OnTriggerEnter(Collider other) {
-    // If the enemy collides with the player
+    // Update is called once per frame
+    void Update()
+    {
+        //Check in which direction the bullet moves
+        transform.Translate(new Vector3(0, 0, -1) * Time.deltaTime * speed, Space.World); // Move the bullet\
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // If the enemy collides with the player
         if (other.CompareTag("Player")) {
+            print("Colision");
+
         // Reduce the player's lives by the damage amount
             other.GetComponent<Player>().lives -= damage;
             lives._texto.text = "Lives: " + other.GetComponent<Player>().lives;
@@ -57,42 +58,5 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    public void Damage(float damage)
-    {
-        live = live - damage;
-        if(live <= 0)
-        {
-            Dead();
-        }
-    }
-
-    private void Dead()
-    {
-        Destroy(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void Shoot()
-    {
-        Vector3 pos = transform.position;
-        pos.z -= 0.5f;
-        Instantiate(proyectil, pos, proyectil.transform.rotation);
-    }
-
-    IEnumerator DisparoRecurrente()
-    {
-        while(true)
-        {
-            Shoot();
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
-
 
 }

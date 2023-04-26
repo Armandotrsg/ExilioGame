@@ -96,6 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   live: 10
   damage: 1
+  lives: {fileID: 0}
+  proyectil: {fileID: 5706321849771502536, guid: 4bfe6deb6806a4d34b215a344a83be9d, type: 3}
 --- !u!1001 &571946949382943982
 PrefabInstance:
   m_ObjectHideFlags: 0
