@@ -53,8 +53,10 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private FirebaseManager firebaseManager;
+
     void Awake() {
-        
+        firebaseManager = FirebaseManager.Instance;
     }
 
     void Start() {
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour {
         } else {
             Destroy(gameObject);
         }
+        StartCoroutine(firebaseManager.GetPreviousScore());
     }
 
     /// <summary>

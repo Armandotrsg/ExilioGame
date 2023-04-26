@@ -25,7 +25,7 @@ public class FirebaseManager : MonoBehaviour
     public TMP_Text statusText;
 
     [Header("Score")]
-    public int score;
+    public int previousScore = 0;
 
     [Header("Instance")]
     private static FirebaseManager instance = null;
@@ -238,6 +238,20 @@ public class FirebaseManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return)) {
                 LoginButton();
             }
+        }
+    }
+
+    public IEnumerator GetPreviousScore() {
+        var DBTask = DBreference.Child("users").Child(User.UserId).Child("score").GetValueAsync();
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null) {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.IsCompleted) {
+            DataSnapshot snapshot = DBTask.Result;
+            previousScore = int.Parse(snapshot.Value.ToString());
+            Debug.Log("Previous score retrieved successfully");
         }
     }
     
