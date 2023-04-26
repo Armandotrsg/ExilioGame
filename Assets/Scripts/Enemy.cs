@@ -21,14 +21,14 @@ public class Enemy : MonoBehaviour
     private Coroutine _corrutina;
 
     [SerializeField]
-    private ProyectilEnemigo proyectil;
+    private EnemyLaser proyectil;
 
     void Start()
     {
         lives = Lives.Instance;
+        _corrutina = StartCoroutine(DisparoRecurrente());
         firebaseManager = FirebaseManager.Instance;
         Assert.IsNotNull(firebaseManager, "FirebaseManager is null");
-        _corrutina = StartCoroutine(Disparar());
     }
 
     void OnTriggerEnter(Collider other) {
