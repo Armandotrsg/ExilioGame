@@ -41,12 +41,14 @@ public class Enemy : MonoBehaviour
 
         // If the player has no more lives
             if (other.GetComponent<Player>().lives <= 0) {
-                // Save the score and kills to the database
-                StartCoroutine(firebaseManager.SaveScore(other.GetComponent<Player>().Score));
-                StartCoroutine(firebaseManager.SaveKills(other.GetComponent<Player>().Kills));
-                //Save the username of the current player which is the email without the domain
-                string username = firebaseManager.auth.CurrentUser.Email.Split('@')[0];
-                StartCoroutine(firebaseManager.SaveUsername(username));
+                if (other.GetComponent<Player>().Score > firebaseManager.previousScore) {
+                     StartCoroutine(firebaseManager.SaveScore(other.GetComponent<Player>().Score));
+                    StartCoroutine(firebaseManager.SaveKills(other.GetComponent<Player>().Kills));
+                    //Save the username of the current player which is the email without the domain
+                    string username = firebaseManager.auth.CurrentUser.Email.Split('@')[0];
+                    StartCoroutine(firebaseManager.SaveUsername(username));
+                }
+               
             // Destroy the player
                 //Destroy(other.gameObject);
             // Load the game over scene
