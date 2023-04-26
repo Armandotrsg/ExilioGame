@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float live = 10f;
 
-
     [SerializeField]
     private int damage = 1;
 
@@ -19,11 +18,17 @@ public class Enemy : MonoBehaviour
 
     private FirebaseManager firebaseManager;
 
+    private Coroutine _corrutina;
+
+    [SerializeField]
+    private ProyectilEnemigo proyectil;
+
     void Start()
     {
         lives = Lives.Instance;
         firebaseManager = FirebaseManager.Instance;
         Assert.IsNotNull(firebaseManager, "FirebaseManager is null");
+        _corrutina = StartCoroutine(Disparar());
     }
 
     void OnTriggerEnter(Collider other) {
@@ -72,4 +77,20 @@ public class Enemy : MonoBehaviour
     {
         
     }
+
+    IEnumerator DisparoRecurrente()
+    {
+        while(true)
+        {
+            Instantiate(
+                proyectil,
+                transform.position,
+                transform.rotation);
+            
+            yield return new WaitForSeconds(2f);
+            print("corrutina recurrente");
+        }
+    }
+
+
 }
