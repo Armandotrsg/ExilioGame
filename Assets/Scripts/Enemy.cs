@@ -78,17 +78,19 @@ public class Enemy : MonoBehaviour
         
     }
 
+    void Shoot()
+    {
+        Vector3 pos = transform.position;
+        pos.z -= 0.5f;
+        Instantiate(proyectil, pos, proyectil.transform.rotation);
+    }
+
     IEnumerator DisparoRecurrente()
     {
         while(true)
         {
-            Instantiate(
-                proyectil,
-                transform.position,
-                transform.rotation);
-            
-            yield return new WaitForSeconds(2f);
-            print("corrutina recurrente");
+            Shoot();
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
