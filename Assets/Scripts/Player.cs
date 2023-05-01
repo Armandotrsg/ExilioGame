@@ -144,9 +144,11 @@ public class Player : MonoBehaviour {
 
     IEnumerator Delay() {
         while (true) {
+            isShooting = true;
             Shoot();
             yield return new WaitForSeconds(0.5f);
-        }
+            isShooting = false;
+        }    
     }
 
     // Detects if the player has collided with an enemy
