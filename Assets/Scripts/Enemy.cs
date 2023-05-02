@@ -74,12 +74,6 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void Shoot()
     {
         Vector3 pos = transform.position;
