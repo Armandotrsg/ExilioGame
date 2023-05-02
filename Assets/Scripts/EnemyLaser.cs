@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class EnemyLaser : MonoBehaviour
 {
 
-    [SerializeField]private float speed = 3000f;
+    [SerializeField] public float speed = 3000f;
     [SerializeField] private int damage;
     private Player player;
     private FirebaseManager firebaseManager;

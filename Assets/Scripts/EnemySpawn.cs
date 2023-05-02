@@ -12,7 +12,7 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField]
     public float destructionTime;
 
-    public float spawnDistance = 10f;
+    public float spawnDistance = 2f;
     public float spawnZRange = 2f;
 
     private Transform target;
@@ -31,6 +31,12 @@ public class EnemySpawn : MonoBehaviour
             SpawnEnemy();
             nextSpawnTime = Time.time + 1f / spawnRate;
         }
+    }
+
+    void FixedUpdate()
+    {
+        EnemySpeed += 0.01f;
+        spawnRate += 0.01f;
     }
 
     void SpawnEnemy()
